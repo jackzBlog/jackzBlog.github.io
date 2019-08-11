@@ -1,24 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Jack&#39;s Blog</title>
-    <link>http://localhost:1313/</link>
-    <description>Recent content on Jack&#39;s Blog</description>
+    <title>Posts on Jack&#39;s Blog</title>
+    <link>http://localhost:1313/post/</link>
+    <description>Recent content in Posts on Jack&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 20 Jul 2019 21:38:52 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jul 2019 00:00:00 +0800</lastBuildDate>
     
-	<atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>About</title>
-      <link>http://localhost:1313/about/</link>
-      <pubDate>Sat, 20 Jul 2019 21:38:52 +0800</pubDate>
-      
-      <guid>http://localhost:1313/about/</guid>
-      <description>这个博客仅用于记录一些技术性的事情与思考，一方面敦促自己不断总结，另一方面也希望能帮助后来者少走弯路。</description>
-    </item>
     
     <item>
       <title>看源码系列缘由</title>

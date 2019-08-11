@@ -10,18 +10,45 @@
   
   <url>
     <loc>http://localhost:1313/</loc>
-    <lastmod>2019-07-28T21:41:52+08:00</lastmod>
+    <lastmod>2019-08-11T21:37:49+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://localhost:1313/categories/</loc>
+    <lastmod>2019-08-11T21:37:49+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/post/</loc>
+    <lastmod>2019-08-11T21:37:49+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://localhost:1313/tags/</loc>
+    <lastmod>2019-08-11T21:37:49+08:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/tags/thoughts/</loc>
+    <lastmod>2019-08-11T21:37:49+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/categories/%E7%9C%8B%E6%BA%90%E7%A0%81/</loc>
+    <lastmod>2019-08-11T21:37:49+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/post/why_writing_read_code_series/</loc>
+    <lastmod>2019-08-11T21:37:49+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   
 </urlset>
