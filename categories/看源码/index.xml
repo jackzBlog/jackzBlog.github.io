@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>看源码 on Jack&#39;s Blog</title>
-    <link>http://localhost:1313/categories/%E7%9C%8B%E6%BA%90%E7%A0%81/</link>
+    <link>https://www.jackz.ga/categories/%E7%9C%8B%E6%BA%90%E7%A0%81/</link>
     <description>Recent content in 看源码 on Jack&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Wed, 10 Jul 2019 00:00:00 +0800</lastBuildDate>
     
-	<atom:link href="http://localhost:1313/categories/%E7%9C%8B%E6%BA%90%E7%A0%81/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.jackz.ga/categories/%E7%9C%8B%E6%BA%90%E7%A0%81/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>看源码系列缘由</title>
-      <link>http://localhost:1313/post/why_writing_read_code_series/</link>
+      <link>https://www.jackz.ga/post/why_writing_read_code_series/</link>
       <pubDate>Wed, 10 Jul 2019 00:00:00 +0800</pubDate>
       
-      <guid>http://localhost:1313/post/why_writing_read_code_series/</guid>
+      <guid>https://www.jackz.ga/post/why_writing_read_code_series/</guid>
       <description>在准备开始时，我在想什么 此时已是工作三年余，看过的代码着实不少，多半不知其中奥义，只在看到他人谈论之时，惊觉，竟是如此，心底不免有些羞愧；同</description>
     </item>
     
