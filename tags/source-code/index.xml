@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Jack&#39;s Blog</title>
-    <link>https://www.jackz.ga/post/</link>
-    <description>Recent content in Posts on Jack&#39;s Blog</description>
+    <title>source code on Jack&#39;s Blog</title>
+    <link>https://www.jackz.ga/tags/source-code/</link>
+    <description>Recent content in source code on Jack&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Mon, 22 Jul 2019 00:00:00 +0800</lastBuildDate>
     
-	<atom:link href="https://www.jackz.ga/post/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.jackz.ga/tags/source-code/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -18,15 +18,6 @@
       
       <guid>https://www.jackz.ga/post/lookforleader/</guid>
       <description>本文主要通过研读zookeeper选主算法流程框架来介绍看源码时的一些概念与方法。 1. 确定一个小目标 阅读源码前，最重要就是确定一个小目标，当然</description>
-    </item>
-    
-    <item>
-      <title>看源码系列缘由</title>
-      <link>https://www.jackz.ga/post/whyreadingsourcecode/</link>
-      <pubDate>Wed, 10 Jul 2019 00:00:00 +0800</pubDate>
-      
-      <guid>https://www.jackz.ga/post/whyreadingsourcecode/</guid>
-      <description>在准备开始时，我在想什么 此时已是工作三年余，看过的代码着实不少，多半不知其中奥义，只在看到他人谈论之时，惊觉，竟是如此，心底不免有些羞愧；同</description>
     </item>
     
   </channel>
