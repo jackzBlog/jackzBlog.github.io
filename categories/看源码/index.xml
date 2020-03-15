@@ -6,13 +6,22 @@
     <description>Recent content in 看源码 on Jack&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 22 Jul 2019 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 21 Aug 2019 00:00:00 +0800</lastBuildDate>
     
 	<atom:link href="https://www.jackz.ga/categories/%E7%9C%8B%E6%BA%90%E7%A0%81/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Zookeeper 选主算法源码解读</title>
+      <title>Zookeeper选票统计算法源码</title>
+      <link>https://www.jackz.ga/post/votescount/</link>
+      <pubDate>Wed, 21 Aug 2019 00:00:00 +0800</pubDate>
+      
+      <guid>https://www.jackz.ga/post/votescount/</guid>
+      <description>本文主要通过串讲Zookeeper选票更新规则的源码，讲述通过阅读源码重构代码抽象的技巧和过程。 简介 上一篇主要介绍了Zookeeper选主的</description>
+    </item>
+    
+    <item>
+      <title>Zookeeper选主算法源码解读</title>
       <link>https://www.jackz.ga/post/lookforleader/</link>
       <pubDate>Mon, 22 Jul 2019 00:00:00 +0800</pubDate>
       

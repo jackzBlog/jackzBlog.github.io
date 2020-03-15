@@ -21,6 +21,15 @@
     </item>
     
     <item>
+      <title>Zookeeper选票统计算法源码</title>
+      <link>https://www.jackz.ga/post/votescount/</link>
+      <pubDate>Wed, 21 Aug 2019 00:00:00 +0800</pubDate>
+      
+      <guid>https://www.jackz.ga/post/votescount/</guid>
+      <description>本文主要通过串讲Zookeeper选票更新规则的源码，讲述通过阅读源码重构代码抽象的技巧和过程。 简介 上一篇主要介绍了Zookeeper选主的</description>
+    </item>
+    
+    <item>
       <title>Zookeeper 选主算法源码解读</title>
       <link>https://www.jackz.ga/post/lookforleader/</link>
       <pubDate>Mon, 22 Jul 2019 00:00:00 +0800</pubDate>
