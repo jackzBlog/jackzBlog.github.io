@@ -49,14 +49,14 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://www.jackz.ga/post/votesrule/" />
 <meta property="article:published_time" content="2019-08-21T00:00:00&#43;08:00"/>
-<meta property="article:modified_time" content="2020-03-17T21:54:13&#43;08:00"/>
+<meta property="article:modified_time" content="2020-03-17T22:06:11&#43;08:00"/>
 
 <meta itemprop="name" content="Zookeeper选票更新规则源码">
 <meta itemprop="description" content="本文主要通过串讲Zookeeper选票更新规则的源码，讲述通过阅读源码重构代码抽象的技巧和过程。 简介 上一篇主要介绍了Zookeeper选主的">
 
 
 <meta itemprop="datePublished" content="2019-08-21T00:00:00&#43;08:00" />
-<meta itemprop="dateModified" content="2020-03-17T21:54:13&#43;08:00" />
+<meta itemprop="dateModified" content="2020-03-17T22:06:11&#43;08:00" />
 <meta itemprop="wordCount" content="1199">
 
 
@@ -209,7 +209,7 @@
 </blockquote>
 
 <p>如果我们去查看这个文件的修改记录就会发现这个函数的初始设计者就是将其写成纯函数，只是后面增加新的特性才破坏了这个特性，见下图。
-<img src="/home/jack/blog/jackz/org/source_code/static/ox-hugo/totalOrderPredicate-diff.png" alt="" />
+<img src="/ox-hugo/totalOrderPredicate-diff.png" alt="" />
 不过由于这个函数比较简单，命名也很规范，要重构其抽象也很简单，如果收到新的LeaderId权重（weight）为0则返回false；否则依次对比周期（epoch），事务编号（zxid）和节点编号（curId），只有在前置条件相等时，才需要比较后一个值的大小。</p>
 
 <p>结合调用点的代码，这个函数返回true是则需要更新本机的选票，那么<strong>zookeepr的选主规则可描述为：权重不为0的节点才可被选为主节点，其中周期大的当选，周期一致时事务编号的当选，前两者都一致的情况，则有编号的节点当选</strong>。自此我们就通过源码重建了zookeeper选主这个抽象业务的逻辑。</p>
