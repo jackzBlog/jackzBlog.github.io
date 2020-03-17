@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Zookeeper选票统计算法源码 - Jack&#39;s Blog</title>
+  <title>Zookeeper选票更新规则源码 - Jack&#39;s Blog</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -29,7 +29,7 @@
 <meta name="generator" content="Hugo 0.55.6" />
 
 
-<link rel="canonical" href="https://www.jackz.ga/post/votescount/" />
+<link rel="canonical" href="https://www.jackz.ga/post/votesrule/" />
 
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -44,26 +44,26 @@
 <link href="/dist/even.min.css?v=2.7.0" rel="stylesheet">
 <link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
 
-<meta property="og:title" content="Zookeeper选票统计算法源码" />
+<meta property="og:title" content="Zookeeper选票更新规则源码" />
 <meta property="og:description" content="本文主要通过串讲Zookeeper选票更新规则的源码，讲述通过阅读源码重构代码抽象的技巧和过程。 简介 上一篇主要介绍了Zookeeper选主的" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://www.jackz.ga/post/votescount/" />
+<meta property="og:url" content="https://www.jackz.ga/post/votesrule/" />
 <meta property="article:published_time" content="2019-08-21T00:00:00&#43;08:00"/>
-<meta property="article:modified_time" content="2020-03-15T14:58:18&#43;08:00"/>
+<meta property="article:modified_time" content="2020-03-17T21:54:13&#43;08:00"/>
 
-<meta itemprop="name" content="Zookeeper选票统计算法源码">
+<meta itemprop="name" content="Zookeeper选票更新规则源码">
 <meta itemprop="description" content="本文主要通过串讲Zookeeper选票更新规则的源码，讲述通过阅读源码重构代码抽象的技巧和过程。 简介 上一篇主要介绍了Zookeeper选主的">
 
 
 <meta itemprop="datePublished" content="2019-08-21T00:00:00&#43;08:00" />
-<meta itemprop="dateModified" content="2020-03-15T14:58:18&#43;08:00" />
-<meta itemprop="wordCount" content="1200">
+<meta itemprop="dateModified" content="2020-03-17T21:54:13&#43;08:00" />
+<meta itemprop="wordCount" content="1199">
 
 
 
 <meta itemprop="keywords" content="zookeeper,source code," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Zookeeper选票统计算法源码"/>
+<meta name="twitter:title" content="Zookeeper选票更新规则源码"/>
 <meta name="twitter:description" content="本文主要通过串讲Zookeeper选票更新规则的源码，讲述通过阅读源码重构代码抽象的技巧和过程。 简介 上一篇主要介绍了Zookeeper选主的"/>
 
 <!--[if lte IE 9]>
@@ -131,7 +131,7 @@
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">Zookeeper选票统计算法源码</h1>
+      <h1 class="post-title">Zookeeper选票更新规则源码</h1>
 
       <div class="post-meta">
         <span class="post-time"> 2019-08-21 </span>
@@ -175,8 +175,7 @@
 
 <h2 id="选票更新规则">选票更新规则</h2>
 
-<p>在解读zookeeper选主源码时，我们做了个猜测<a href="https://www.jackz.ga/post/lookforleader/#org8a41141">totalOrderPredicate函数是用来判断是否需要更新选票</a>，现在我们需要详细了解其中规则。尝试验证这个猜测的正确性。
-#<a id="org1bc74b9"></a></p>
+<p>在解读zookeeper选主源码时，我们做了个猜测<a href="https://www.jackz.ga/post/lookforleader/#org8a41141">totalOrderPredicate函数是用来判断是否需要更新选票</a>，现在我们需要详细了解其中规则。尝试验证这个猜测的正确性。</p>
 
 <pre><code class="language-java">protected boolean totalOrderPredicate(long newId, long newZxid, long newEpoch,
                                       long curId, long curZxid, long curEpoch) {
@@ -210,9 +209,8 @@
 </blockquote>
 
 <p>如果我们去查看这个文件的修改记录就会发现这个函数的初始设计者就是将其写成纯函数，只是后面增加新的特性才破坏了这个特性，见下图。
-<img src="/ox-hugo/totalOrderPredicate-diff.png" alt="" /></p>
-
-<p>不过由于这个函数比较简单，命名也很规范，要重构其抽象也很简单，如果收到新的LeaderId权重（weight）为0则返回false；否则依次对比周期（epoch），事务编号（zxid）和节点编号（curId），只有在前置条件相等时，才需要比较后一个值的大小。</p>
+<img src="/home/jack/blog/jackz/org/source_code/static/ox-hugo/totalOrderPredicate-diff.png" alt="" />
+不过由于这个函数比较简单，命名也很规范，要重构其抽象也很简单，如果收到新的LeaderId权重（weight）为0则返回false；否则依次对比周期（epoch），事务编号（zxid）和节点编号（curId），只有在前置条件相等时，才需要比较后一个值的大小。</p>
 
 <p>结合调用点的代码，这个函数返回true是则需要更新本机的选票，那么<strong>zookeepr的选主规则可描述为：权重不为0的节点才可被选为主节点，其中周期大的当选，周期一致时事务编号的当选，前两者都一致的情况，则有编号的节点当选</strong>。自此我们就通过源码重建了zookeeper选主这个抽象业务的逻辑。</p>
 
@@ -238,7 +236,7 @@
   </p>
   <p class="copyright-item">
     <span class="item-title">LastMod</span>
-    <span class="item-content">2020-03-15</span>
+    <span class="item-content">2020-03-17</span>
   </p>
   
   <p class="copyright-item">
