@@ -6,10 +6,19 @@
     <description>Recent content in source code on Jack&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 21 Aug 2019 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 24 Oct 2019 00:00:00 +0800</lastBuildDate>
     
 	<atom:link href="https://www.jackz.ga/tags/source-code/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Zookeeper选票统计源码</title>
+      <link>https://www.jackz.ga/post/votescount/</link>
+      <pubDate>Thu, 24 Oct 2019 00:00:00 +0800</pubDate>
+      
+      <guid>https://www.jackz.ga/post/votescount/</guid>
+      <description>本节将会讨论阅读源码时如何分析、阅读普通的函数，以实现我们分析代码、重构抽象的目的。 简介 在Zookeeper选主的算法框架的章节里，我们猜测</description>
+    </item>
     
     <item>
       <title>Zookeeper选票更新规则源码</title>

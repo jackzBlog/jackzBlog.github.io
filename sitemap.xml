@@ -10,25 +10,50 @@
   
   <url>
     <loc>https://www.jackz.ga/categories/</loc>
-    <lastmod>2020-03-17T22:06:11+08:00</lastmod>
+    <lastmod>2020-03-27T22:17:45+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://www.jackz.ga/</loc>
-    <lastmod>2020-03-17T22:06:11+08:00</lastmod>
+    <lastmod>2020-03-27T22:17:45+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://www.jackz.ga/post/</loc>
-    <lastmod>2020-03-17T22:06:11+08:00</lastmod>
+    <lastmod>2020-03-27T22:17:45+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://www.jackz.ga/tags/</loc>
-    <lastmod>2020-03-17T22:06:11+08:00</lastmod>
+    <lastmod>2020-03-27T22:17:45+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.jackz.ga/post/votescount/</loc>
+    <lastmod>2020-03-27T22:17:45+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.jackz.ga/tags/source-code/</loc>
+    <lastmod>2020-03-27T22:17:45+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.jackz.ga/tags/zookeeper/</loc>
+    <lastmod>2020-03-27T22:17:45+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.jackz.ga/categories/%E7%9C%8B%E6%BA%90%E7%A0%81/</loc>
+    <lastmod>2020-03-27T22:17:45+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -37,24 +62,6 @@
     <lastmod>2020-03-17T22:06:11+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.jackz.ga/tags/source-code/</loc>
-    <lastmod>2020-03-17T22:06:11+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.jackz.ga/tags/zookeeper/</loc>
-    <lastmod>2020-03-17T22:06:11+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.jackz.ga/categories/%E7%9C%8B%E6%BA%90%E7%A0%81/</loc>
-    <lastmod>2020-03-17T22:06:11+08:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
