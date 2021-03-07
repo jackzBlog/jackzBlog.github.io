@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>看源码系列缘由 - Jack&#39;s Blog</title>
+  <title>源码阅读简介 - Jack&#39;s Blog</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -17,7 +17,7 @@
 
 
 <meta name="author" content="Jack" />
-  <meta name="description" content="在准备开始时，我在想什么 此时已是工作三年余，看过的代码着实不少，多半不知其中奥义，只在看到他人谈论之时，惊觉，竟是如此，心底不免有些羞愧；同" />
+  <meta name="description" content="学习最重要的两个点就是输入和输出，对于程序员而言最重要的输出当然是代码编写，而最重要的输入则是代码阅读。然而没有任何一门课程或任何一本书的教" />
 
   <meta name="keywords" content="Hugo, theme, even" />
 
@@ -29,7 +29,7 @@
 <meta name="generator" content="Hugo 0.40.1" />
 
 
-<link rel="canonical" href="https://www.jackz.ga/post/whyreadingsourcecode/" />
+<link rel="canonical" href="https://www.jackz.ga/post/introduction/" />
 
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -44,20 +44,16 @@
 <link href="/dist/even.min.css?v=2.7.0" rel="stylesheet">
 <link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
 
-<meta property="og:title" content="看源码系列缘由" />
-<meta property="og:description" content="在准备开始时，我在想什么 此时已是工作三年余，看过的代码着实不少，多半不知其中奥义，只在看到他人谈论之时，惊觉，竟是如此，心底不免有些羞愧；同" />
+<meta property="og:title" content="源码阅读简介" />
+<meta property="og:description" content="学习最重要的两个点就是输入和输出，对于程序员而言最重要的输出当然是代码编写，而最重要的输入则是代码阅读。然而没有任何一门课程或任何一本书的教" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://www.jackz.ga/post/whyreadingsourcecode/" />
+<meta property="og:url" content="https://www.jackz.ga/post/introduction/" />
 
 
 
-<meta property="article:published_time" content="2019-07-10T00:00:00&#43;08:00"/>
+<meta property="article:published_time" content="2020-11-06T00:00:00&#43;08:00"/>
 
-<meta property="article:modified_time" content="2019-08-28T22:30:50&#43;08:00"/>
-
-
-
-
+<meta property="article:modified_time" content="2021-03-06T22:25:02&#43;08:00"/>
 
 
 
@@ -65,20 +61,24 @@
 
 
 
-<meta itemprop="name" content="看源码系列缘由">
-<meta itemprop="description" content="在准备开始时，我在想什么 此时已是工作三年余，看过的代码着实不少，多半不知其中奥义，只在看到他人谈论之时，惊觉，竟是如此，心底不免有些羞愧；同">
 
 
-<meta itemprop="datePublished" content="2019-07-10T00:00:00&#43;08:00" />
-<meta itemprop="dateModified" content="2019-07-10T00:00:00&#43;08:00" />
-<meta itemprop="wordCount" content="1046">
+
+
+<meta itemprop="name" content="源码阅读简介">
+<meta itemprop="description" content="学习最重要的两个点就是输入和输出，对于程序员而言最重要的输出当然是代码编写，而最重要的输入则是代码阅读。然而没有任何一门课程或任何一本书的教">
+
+
+<meta itemprop="datePublished" content="2020-11-06T00:00:00&#43;08:00" />
+<meta itemprop="dateModified" content="2020-11-06T00:00:00&#43;08:00" />
+<meta itemprop="wordCount" content="708">
 
 
 
 <meta itemprop="keywords" content="thoughts," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="看源码系列缘由"/>
-<meta name="twitter:description" content="在准备开始时，我在想什么 此时已是工作三年余，看过的代码着实不少，多半不知其中奥义，只在看到他人谈论之时，惊觉，竟是如此，心底不免有些羞愧；同"/>
+<meta name="twitter:title" content="源码阅读简介"/>
+<meta name="twitter:description" content="学习最重要的两个点就是输入和输出，对于程序员而言最重要的输出当然是代码编写，而最重要的输入则是代码阅读。然而没有任何一门课程或任何一本书的教"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -145,10 +145,10 @@
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">看源码系列缘由</h1>
+      <h1 class="post-title">源码阅读简介</h1>
 
       <div class="post-meta">
-        <span class="post-time"> 2019-07-10 </span>
+        <span class="post-time"> 2020-11-06 </span>
         <div class="post-category">
             
               <a href="/categories/%E7%9C%8B%E6%BA%90%E7%A0%81/"> 看源码 </a>
@@ -168,9 +168,8 @@
 <ul>
 <li>
 <ul>
-<li><a href="#在准备开始时-我在想什么">在准备开始时，我在想什么</a></li>
-<li><a href="#在阅读源码时-我在想什么">在阅读源码时，我在想什么</a></li>
-<li><a href="#在写这系列时-我在想什么">在写这系列时，我在想什么</a></li>
+<li><a href="#源码阅读的目的">源码阅读的目的</a></li>
+<li><a href="#源码阅读的本质">源码阅读的本质</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -181,34 +180,24 @@
     <div class="post-content">
       
 
+<p>学习最重要的两个点就是输入和输出，对于程序员而言最重要的输出当然是代码编写，而最重要的输入则是代码阅读。然而没有任何一门课程或任何一本书的教导我们阅读源码，以至于我们总是在使用很笨拙的方法在阅读源码，同时我们阅读地最多的还是自己的代码，以至于编码水平无法有大的突破。</p>
 
-<figure>
-    
-        <img src="/ox-hugo/binary.jpg" />
-    
-    
-</figure>
+<h2 id="源码阅读的目的">源码阅读的目的</h2>
 
+<blockquote>
+<p>目标要明确，信念要坚定。 &ndash;林肯</p>
+</blockquote>
 
-<h2 id="在准备开始时-我在想什么">在准备开始时，我在想什么</h2>
+<p>只有知道要去哪，才算真的启程，目标对于阅读源码犹为重要，这也是我们把这个主题放在首位地原因。通常我们阅读源码都是想要知道 <strong>某一个功能的大概写法</strong> ,而后，可能会想进一步 <strong>了解代码实现细节和数据流向</strong> ，因为这样能帮助我们更好地理解代码为什么要这样写，学习其中的算法逻辑，同时有助于我们 <strong>查找代码中的BUG</strong> ,毕竟问题定位和代码检视都是我们程序员必备的技能，最后我们会希望能通过阅读代码学习到该 <strong>软件架构和顶层设计</strong> 以参与软件的深入设计和开发甚至重新实现。而具体到阅读代码的时，也要有相应的小目标，比如彻底弄懂一个代码块的细节，弄清楚某函数具体作用，学习一个流程的前后细节等。
+阅读源码的目的通常都是如此层层递进，谨记这些逻辑有助于我们更高效地厘清思路，才不容易一头扎进代码的大网里，才知道什么时候是停下来的正确时机。</p>
 
-<p>此时已是工作三年余，看过的代码着实不少，多半不知其中奥义，只在看到他人谈论之时，惊觉，竟是如此，心底不免有些羞愧；同时，工作的要求也水涨船高，最近也开始有点力不从心，自觉需要更多地阅读好的代码，以提升自己的能力，避免出现更大的危机。</p>
+<h2 id="源码阅读的本质">源码阅读的本质</h2>
 
-<p>可工期繁忙，时间紧迫，然则，看源码之事，常有懈怠，其中内容更无法串联，常常是扭头就忘，又回到了先前的境地，因此才希望结合写博客的形式，既能敦促自己阅读，又可记录输出，不至于言帚忘笤。</p>
+<blockquote>
+<p>编写代码是一个将文档或者脑海中一个抽象的逻辑通过程序语言转换成具体细节的过程，而源码阅读则是从具体的代码细节中重建抽象的过程。</p>
+</blockquote>
 
-<h2 id="在阅读源码时-我在想什么">在阅读源码时，我在想什么</h2>
-
-<p>常有人将学习分层：知其、知其然、知其所以然。通常我们在学习一个工具或者代码库是如此，看代码亦是如此，知道了每个代码块要实现的功能，看明白每个代码块如何实现该功能，最后再看明白代码块为何要这样实现。</p>
-
-<p>第一个层次，代码块总不会做太多的隐藏，并且会帮我们做总结——通过良好的抽象，让我们见名之意。到了代码块如何实现一个功能的层次，就不是如此直观了，一方面出于代码复用及扩展等原因，代码常会被拆分成不同的模块，散落在不同文件中，幸好前人已经总结《设计模式》这样的神书，让我们在学习途中有迹可循；不过对于另一方面，我们就没有这么幸运了，那些由于不良设计、安全需求或者正常业务所需，代码中常常夹杂着各种各样似是而非的噪音代码，其中一些更是将我们引入迷宫深处，难以知返。最后一个层次则属于更高层级的抽象，有些需要深入的领域知识，有些已经脱离了业务的范畴，为的是某种使用场景的专属规范，理清这些架构和设计信息，不仅需要大量的阅读还需要深厚的知识积累。</p>
-
-<p>在看代码时当然都想弄清楚这三个层级的信息，但却碍于能力问题，难以达到，因此想通过不断地总结与积累，提升自己的技巧与知识，让自己对代码的认识更上一层。</p>
-
-<h2 id="在写这系列时-我在想什么">在写这系列时，我在想什么</h2>
-
-<p>看源码如此重要却又如此难，所以才更需要有好的技巧与方法，更好更快地获取到想要获取的知识。但是当下的资料与论文都没有非常系统地阐述这个话题，大部分是将看源码后的成果流水式地铺展出来，这些更像是作者工作日志，无法借鉴；小部分是提纲挈领地将其积累的看源码经验表达出来，虽说精辟，却过于抽象，不好消化。因此看源码时常常不得其法，如盲人摸象，并且还时常犯一样的错误，走出乱流时才幡然醒悟，竟如先前状况一样，不免大拍脑门。</p>
-
-<p>因而这个系列重点记录了看源码时的一些思考与方法，提醒自己在遇到类似的代码迷宫时该如何下手，因而风格会更加口语化，内容也会稍显啰嗦。也只能这样，才能提醒自己不要重复犯错了。为了加深记忆，同时也作为看过代码的输出，这些思考和方法都是结合源码的具体实践，因此也会在恰当的时候，将看过的代码进行一次总结，也是后续通往更高层次抽象知识的积累。</p>
+<p>代码编写无论是大是小，都是为了实现功能，也就是用具体代码将功能表达出来。但出于拓展、维护和代码复用等考虑，软件里各种功能会相互交织在一起，形成一张巨大的功能网，我们的任务则是在这些，同时这些网络并没有明确的路标，迷失在其中的码农自然不计其数。在大型软件里这些功能网络过于复杂，根本没有办法探清全貌，所以阅读源码时，主要是从代码网络中重建功能抽象，整理出软件的架构脉络，以备后面继续细读。</p>
 
     </div>
 
@@ -221,7 +210,7 @@
   </p>
   <p class="copyright-item">
     <span class="item-title">LastMod</span>
-    <span class="item-content">2019-08-28</span>
+    <span class="item-content">2021-03-06</span>
   </p>
   
   <p class="copyright-item">
@@ -243,12 +232,12 @@
       
       <nav class="post-nav">
         
-          <a class="prev" href="/post/lookforleader/">
-            <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">Zookeeper 选主算法源码解读</span>
-            <span class="prev-text nav-mobile">Prev</span>
-          </a>
         
+          <a class="next" href="/post/lookforleader/">
+            <span class="next-text nav-default">Zookeeper 选主算法源码解读</span>
+            <span class="prev-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
       </nav>
     </footer>
   </article>

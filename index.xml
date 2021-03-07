@@ -6,7 +6,7 @@
     <description>Recent content on Jack&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 24 Oct 2019 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jul 2019 21:38:52 +0800</lastBuildDate>
     
 	<atom:link href="https://www.jackz.ga/index.xml" rel="self" type="application/rss+xml" />
     
@@ -21,25 +21,16 @@
     </item>
     
     <item>
-      <title>Zookeeper选票统计源码</title>
-      <link>https://www.jackz.ga/post/votescount/</link>
-      <pubDate>Thu, 24 Oct 2019 00:00:00 +0800</pubDate>
+      <title>源码阅读简介</title>
+      <link>https://www.jackz.ga/post/introduction/</link>
+      <pubDate>Fri, 06 Nov 2020 00:00:00 +0800</pubDate>
       
-      <guid>https://www.jackz.ga/post/votescount/</guid>
-      <description>本节将会讨论阅读源码时如何分析、阅读普通的函数，以实现我们分析代码、重构抽象的目的。 简介 在Zookeeper选主的算法框架的章节里，我们猜测</description>
+      <guid>https://www.jackz.ga/post/introduction/</guid>
+      <description>学习最重要的两个点就是输入和输出，对于程序员而言最重要的输出当然是代码编写，而最重要的输入则是代码阅读。然而没有任何一门课程或任何一本书的教</description>
     </item>
     
     <item>
-      <title>Zookeeper选票更新规则源码</title>
-      <link>https://www.jackz.ga/post/votesrule/</link>
-      <pubDate>Wed, 21 Aug 2019 00:00:00 +0800</pubDate>
-      
-      <guid>https://www.jackz.ga/post/votesrule/</guid>
-      <description>本文主要通过串讲Zookeeper选票更新规则的源码，讲述通过阅读源码重构代码抽象的技巧和过程。 简介 上一篇主要介绍了Zookeeper选主的</description>
-    </item>
-    
-    <item>
-      <title>Zookeeper选主算法源码解读</title>
+      <title>Zookeeper 选主算法源码解读</title>
       <link>https://www.jackz.ga/post/lookforleader/</link>
       <pubDate>Mon, 22 Jul 2019 00:00:00 +0800</pubDate>
       
