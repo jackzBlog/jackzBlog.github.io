@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Source Code on Jack&#39;s Blog</title>
+    <link>https://www.jackz.ga/tags/source-code/</link>
+    <description>Recent content in Source Code on Jack&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 18 Jul 2021 00:00:00 +0800</lastBuildDate>
+    
+	<atom:link href="https://www.jackz.ga/tags/source-code/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>在阅读zookeeper源码前</title>
+      <link>https://www.jackz.ga/post/theverybeginning/</link>
+      <pubDate>Sun, 18 Jul 2021 00:00:00 +0800</pubDate>
+      
+      <guid>https://www.jackz.ga/post/theverybeginning/</guid>
+      <description>在阅读源码前配置IDE配置环境这些常规操作，大家肯定都是顺手拈来的，就像整个阅读源码系列一样，我们在这主要是要讨论什么时候该停，以免准备地太</description>
+    </item>
+    
+    <item>
+      <title>Zookeeper选主小结</title>
+      <link>https://www.jackz.ga/post/lookforleadersummary/</link>
+      <pubDate>Thu, 28 Jan 2021 00:00:00 +0800</pubDate>
+      
+      <guid>https://www.jackz.ga/post/lookforleadersummary/</guid>
+      <description>在阅读源码简介中，我们就讨论过阅读源码本质是要 从代码细节中重建抽象 。既要重构抽象，就必须不断在阅读的代码中整理其中脉络，以帮助我们更好地理解</description>
+    </item>
+    
+    <item>
+      <title>Zookeeper选票统计源码</title>
+      <link>https://www.jackz.ga/post/votescount/</link>
+      <pubDate>Thu, 24 Oct 2019 00:00:00 +0800</pubDate>
+      
+      <guid>https://www.jackz.ga/post/votescount/</guid>
+      <description>本节将会讨论阅读源码时如何分析、阅读普通的函数，以实现我们分析代码、重构抽象的目的。 简介 在Zookeeper选主的算法框架的章节里，我们猜测</description>
+    </item>
+    
+    <item>
+      <title>Zookeeper选票更新规则源码</title>
+      <link>https://www.jackz.ga/post/votesrule/</link>
+      <pubDate>Wed, 21 Aug 2019 00:00:00 +0800</pubDate>
+      
+      <guid>https://www.jackz.ga/post/votesrule/</guid>
+      <description>本文主要通过串讲Zookeeper选票更新规则的源码，讲述通过阅读源码重构代码抽象的技巧和过程。 简介 上一篇主要介绍了Zookeeper选主的</description>
+    </item>
+    
+    <item>
+      <title>Zookeeper选主算法源码解读</title>
+      <link>https://www.jackz.ga/post/lookforleader/</link>
+      <pubDate>Mon, 22 Jul 2019 00:00:00 +0800</pubDate>
+      
+      <guid>https://www.jackz.ga/post/lookforleader/</guid>
+      <description>本文主要通过研读zookeeper选主算法流程框架来介绍看源码时的一些概念与方法。 1. 确定一个小目标 阅读源码前，最重要就是确定一个小目标，当然</description>
+    </item>
+    
+  </channel>
+</rss>

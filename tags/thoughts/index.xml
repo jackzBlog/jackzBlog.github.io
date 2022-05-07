@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Thoughts on Jack&#39;s Blog</title>
+    <link>https://www.jackz.ga/tags/thoughts/</link>
+    <description>Recent content in Thoughts on Jack&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 06 Nov 2020 00:00:00 +0800</lastBuildDate>
+    
+	<atom:link href="https://www.jackz.ga/tags/thoughts/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>源码阅读简介</title>
+      <link>https://www.jackz.ga/post/introduction/</link>
+      <pubDate>Fri, 06 Nov 2020 00:00:00 +0800</pubDate>
+      
+      <guid>https://www.jackz.ga/post/introduction/</guid>
+      <description>学习最重要的两个点就是输入和输出，对于程序员而言最重要的输出当然是代码编写，而最重要的输入则是代码阅读。然而没有任何一门课程或任何一本书的教</description>
+    </item>
+    
+    <item>
+      <title>看源码系列缘由</title>
+      <link>https://www.jackz.ga/post/whyreadingsourcecode/</link>
+      <pubDate>Wed, 10 Jul 2019 00:00:00 +0800</pubDate>
+      
+      <guid>https://www.jackz.ga/post/whyreadingsourcecode/</guid>
+      <description>在准备开始时，我在想什么 此时已是工作三年余，看过的代码着实不少，多半不知其中奥义，只在看到他人谈论之时，惊觉，竟是如此，心底不免有些羞愧；同</description>
+    </item>
+    
+  </channel>
+</rss>

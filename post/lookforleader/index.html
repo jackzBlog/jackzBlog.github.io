@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Zookeeper选主算法源码解读 - Jack&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Jack" />
+  <meta name="description" content="本文主要通过研读zookeeper选主算法流程框架来介绍看源码时的一些概念与方法。 1. 确定一个小目标 阅读源码前，最重要就是确定一个小目标，当然" />
+
+  <meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.40.1" />
+
+
+<link rel="canonical" href="https://www.jackz.ga/post/lookforleader/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/even.min.css?v=2.7.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+<meta property="og:title" content="Zookeeper选主算法源码解读" />
+<meta property="og:description" content="本文主要通过研读zookeeper选主算法流程框架来介绍看源码时的一些概念与方法。 1. 确定一个小目标 阅读源码前，最重要就是确定一个小目标，当然" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.jackz.ga/post/lookforleader/" />
+
+
+
+<meta property="article:published_time" content="2019-07-22T00:00:00&#43;08:00"/>
+
+<meta property="article:modified_time" content="2021-07-25T21:04:11&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Zookeeper选主算法源码解读">
+<meta itemprop="description" content="本文主要通过研读zookeeper选主算法流程框架来介绍看源码时的一些概念与方法。 1. 确定一个小目标 阅读源码前，最重要就是确定一个小目标，当然">
+
+
+<meta itemprop="datePublished" content="2019-07-22T00:00:00&#43;08:00" />
+<meta itemprop="dateModified" content="2019-07-22T00:00:00&#43;08:00" />
+<meta itemprop="wordCount" content="3974">
+
+
+
+<meta itemprop="keywords" content="zookeeper,source code," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Zookeeper选主算法源码解读"/>
+<meta name="twitter:description" content="本文主要通过研读zookeeper选主算法流程框架来介绍看源码时的一些概念与方法。 1. 确定一个小目标 阅读源码前，最重要就是确定一个小目标，当然"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Jack</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Jack</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Zookeeper选主算法源码解读</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-07-22 </span>
+        <div class="post-category">
+            
+              <a href="/categories/%E7%9C%8B%E6%BA%90%E7%A0%81/"> 看源码 </a>
+            
+          </div>
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#1-dot-确定一个小目标">1. 确定一个小目标</a></li>
+<li><a href="#2-dot-阅读起点">2. 阅读起点</a></li>
+<li><a href="#3-dot-lookforleader结构分析">3. lookForLeader结构分析</a></li>
+<li><a href="#4-dot-lookforleader源码解读">4. lookForLeader源码解读</a>
+<ul>
+<li>
+<ul>
+<li><a href="#第一个try-catch块"><strong>第一个try-catch块</strong></a></li>
+<li><a href="#选主前的准备"><strong>选主前的准备</strong></a></li>
+<li><a href="#选主的while循环"><strong>选主的while循环</strong></a></li>
+<li><a href="#获取notification并做初步判断">获取Notification并做初步判断</a></li>
+<li><a href="#选票处理">选票处理</a></li>
+<li><a href="#选主周期判断">选主周期判断</a></li>
+<li><a href="#完成选主">完成选主</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#5-dot-小结">5. 小结</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<p>本文主要通过研读zookeeper选主算法流程框架来介绍看源码时的一些概念与方法。</p>
+
+<h2 id="1-dot-确定一个小目标">1. 确定一个小目标</h2>
+
+<p><a id="org4ed5fa5"></a>
+阅读源码前，最重要就是确定一个小目标，当然不是那种一个亿的小目标，而是明确自己希望通过阅读这个代码模块弄清楚什么信息。如果没有这个目标，在阅读代码的时候就会抓不住重点，容易不断地在各代码块之间跳转，最后感觉已经读了很多行的代码了，可能也大概知道每个函数做了什么，却不知道这些代码凑在一起做了什么，如何实现最终的功能。这种情况，我们通常称之为 <strong>阅读迷失</strong> ——像走迷宫一样，每一个路口都很熟悉，却不知道自己该往哪里走。
+后面会继续探讨选取阅读目标是否合适的问题，此次先选定目标为了解 <strong>Zookeeper如何选择合适的主节点</strong> 。</p>
+
+<h2 id="2-dot-阅读起点">2. 阅读起点</h2>
+
+<p>源码不像书籍那样有目录或者索引让读者能快速找到需要阅读的章节，因此寻找阅读源码的起点时常让人发愁。幸运的是代码通常都是一个有机的整体，只要找到相近的内容就很容易能找到真正要阅读的内容，同时每一部分代码都需要反复地阅读才能理解，所以从哪开始阅读源码并不是特别重要，真正着手去阅读才更重要。</p>
+
+<p>我们的目标是了解 <strong>Zookeeper如何选择合适的主节点</strong> ，也就是常说的选主或叫选举，英文是election，直接查一下代码仓里是否有相关的类，刚好找到这个一个接口：</p>
+
+<pre><code class="language-java">public interface Election {
+    public Vote lookForLeader() throws InterruptedException;
+    public void shutdown();
+}
+</code></pre>
+
+<p>其中lookForLeader()函数很像我们想要找的函数，就从这个函数入手。当前仍使用（未被标注为Deprecated）的实现类只有 <span class="underline"><strong>org.apache.zookeeper.server.quorum.FastLeaderElection#lookForLeader;</strong></span></p>
+
+<h2 id="3-dot-lookforleader结构分析">3. lookForLeader结构分析</h2>
+
+<p>让人头疼的是这个函数是一个接近200行的大函数，这个时候需要先进行一下函数框架分析，而不是一头扎进去看细节。
+浏览主体结构，看到整个函数主要是由两个try块组成，主要流程代码集中在第二个try里面，其中最主要的部分就是一个while循环，根据其运行条件：</p>
+
+<pre><code class="language-java">while ((self.getPeerState() == ServerState.LOOKING) &amp;&amp;
+                (!stop)){...}
+</code></pre>
+
+<p>可以猜测，只要服务器还在选主流程中，就一直不会跳出循环，换言之，选主流程的主要代码都在这个代码块内。展开这个循环，最主要的是switch代码块，其中首先被处理的状态为Looking的分支，这个代码块内应该就是我们要看的 <strong>Zookeeper如何选择合适的主节点</strong> 的代码。</p>
+
+<h2 id="4-dot-lookforleader源码解读">4. lookForLeader源码解读</h2>
+
+<p>根据上面的结构分析，我们其实可以直接就看<a href="#org20bb883">while循环</a>的内容，毕竟主要的选主代码逻辑应该都在里面，不过我们上面的分析都是猜测，现在需要联系前后代码进行小心的求证；另一方面不在<a href="#org20bb883">while循环</a>的内容又比较少，完全可以从头开始看，只是在看的时候要把握重点即可。</p>
+
+<h4 id="第一个try-catch块"><strong>第一个try-catch块</strong></h4>
+
+<p>先贴上源代码：</p>
+
+<pre><code class="language-java">try {
+    self.jmxLeaderElectionBean = new LeaderElectionBean();
+    MBeanRegistry.getInstance().register(
+    self.jmxLeaderElectionBean, self.jmxLocalPeerBean);
+} catch (Exception e) {
+    LOG.warn(&quot;Failed to register with JMX&quot;, e);
+    self.jmxLeaderElectionBean = null;
+}
+</code></pre>
+
+<p>这部分代码主要是注册了一个选主的Bean，如果你不明白这个代码块是什么意思，大概率是因为你不懂Java bean的概念。此时，就像在读外文遇到不懂的单词一样，通常有两种手段：一是直接跳过，查看后文有没有联系，然后再慢慢理解；另一个是直接去查字典。在阅读源码时，最好不要立刻去查（包括去网上搜索相关信息或者直接跳转到该函数的实现源码），因为这样很容易进入到一个全新的领域，带出来更多新的概念，最后就变成了好像每个函数都看过，但是就是不了解整个模块是怎么工作的，也就是前面提到的 <strong><a href="#org4ed5fa5">阅读迷失</a></strong> 。而且这里可以看到，catch的是所有异常，也就是说，这块代码无论抛出任何运行时异常，都不会影响后面代码的执行。同时根据我们前面的结构分析，这里的代码跟我们阅读的目标 <strong>Zookeeper如何选择合适的主节点</strong> 相关性没那么大，所以我们阅读的策略是暂时先跳过这个块代码。</p>
+
+<h4 id="选主前的准备"><strong>选主前的准备</strong></h4>
+
+<p>在进入选主<a href="#org20bb883">while循环</a>前，除去创建map和变量值设置，只调用了updateProposal和sendNotifications这两个函数，像前面提到的，我们最好先不要跳转到定义，别去看里面的细节，要知道我们编写代码其中一个最重要的目的就是 <strong>构建抽象</strong> ,良好的抽象能让我们见名知义，这两个函数就是这样的例子，所以我们可以直接说，zookeepr在选主前会先更新提案信息，然后发送一个信息（提案）。</p>
+
+<h4 id="选主的while循环"><strong>选主的while循环</strong></h4>
+
+<p><a id="org20bb883"></a>
+循环里第一行就是从一个recvqueue里获取一个Notification，上一节我们刚看到了，进入循环前zkServer会先发送Notification，而现在zkServer获取了一个Notification，因此我们可以大胆地猜测zkServer之间就是通过这种Notification交互最终选定主节点的。因此后续对Notification的操作、处理就成了我们重点关注的流程。</p>
+
+<h4 id="获取notification并做初步判断">获取Notification并做初步判断</h4>
+
+<p>拿到Notification后，代码进入多分支情况，当Notification为空时，zkServer会尝试发送Notification或者使用manger进行connectAll（此处猜测应该是连接所有其他的zkServer，记住：所有代码都已经在你手上了，尽管大胆猜测，后续小心求证即可）。我们可以合理地认为此处是zk在处理网络异常的情况，暂时可以放下，调到下一个分支：</p>
+
+<h4 id="选票处理">选票处理</h4>
+
+<p>通过上面的分析，我们猜测zkServer选主时通过Notification进行交互，因此我们不妨把Notification认为是选主用的选票，而在这个分支里，只有当选票中的sid和leader信息满足一定规则时才能被处理，不妨继续发扬不着急去看定义的精神，继续往下，会看到前面分析的很重要的switch控制语句，其跳转条件就是选票中的状态信息，而当状态为LOOKING时就是我们最为关心的选主流程。</p>
+
+<h4 id="选主周期判断">选主周期判断</h4>
+
+<pre><code class="language-java">if (n.electionEpoch &gt; logicalclock.get()) {
+    if (totalOrderPredicate(n.leader, n.zxid, n.peerEpoch,
+        getInitId(), getInitLastLoggedZxid(), getPeerEpoch())) {
+        updateProposal(n.leader, n.zxid, n.peerEpoch);
+    } else {
+        updateProposal(getInitId(),
+        getInitLastLoggedZxid(),
+        getPeerEpoch());
+    }
+    sendNotifications();
+} else if (n.electionEpoch &lt; logicalclock.get()) {
+    break;
+} else if (totalOrderPredicate(n.leader, n.zxid, n.peerEpoch,
+           proposedLeader, proposedZxid, proposedEpoch)) {
+    updateProposal(n.leader, n.zxid, n.peerEpoch);
+    sendNotifications();
+}
+</code></pre>
+
+<p>此时代码又进入了条件分支，而判断条件则是选票中的选举周期，既然要跟发送过来的选举周期进行比较，那么大于号右边的应该就是本机的选举周期，否则就很奇怪了。接下来的代码较多，但是逻辑比较简单，按照其代码顺序就是：如果选票的选举周期大于本机，则更新本机的选举周期，并重新发送更新后的选票，小于本机则直接将选票扔掉，相等时重新发送更新后的选票，（不得不说，这一部分的代码写得不够好，一方面处理逻辑稍显混乱，另一方面很多不是同一个抽象层级的代码都混在一起了。如果你读过《代码整洁之道》你应该明白我的意思，如果没有读过这本书，建议你读一下，对于怎样写出好代码很有帮助）</p>
+
+<p>至此，我们可以对zookeeper的选主做第一个小结， <strong>ZK选主中，存在一个选举周期，该周期决定了选票是否用有效，只有在同一周期的选票才会被处理</strong> 。</p>
+
+<h4 id="完成选主">完成选主</h4>
+
+<p><a id="org4d45291"></a></p>
+
+<pre><code class="language-java">if (termPredicate(recvset,
+    new Vote(proposedLeader, proposedZxid,
+        logicalclock.get(), proposedEpoch))) {
+
+    while((n = recvqueue.poll(finalizeWait,
+        TimeUnit.MILLISECONDS)) != null) {
+
+        if (totalOrderPredicate(n.leader, n.zxid, n.peerEpoch,
+            proposedLeader, proposedZxid, proposedEpoch)) {
+            recvqueue.put(n);
+            break;
+       }
+    }
+
+    if (n == null) {
+        self.setPeerState((proposedLeader == self.getId()) ?
+            ServerState.LEADING: learningState());
+
+            Vote endVote = new Vote(proposedLeader, proposedZxid, proposedEpoch);
+            leaveInstance(endVote);
+            return endVote;
+    }
+}
+</code></pre>
+
+<p>接下来，zkServer将收到的选票和自己的选票传到termPredicate函数中做判断，由于不能见名知义，我们就结合条件分支的内部逻辑再来猜测该函数是做什么的。</p>
+
+<p>首先是一个循环，将recvqueue里的所有通知都取出来，然后调用totalOrderPredicate进行判断，<a href="#org4d45291">结合前面的代码</a>，这个函数返回为true的话，就需要更新zkServer的通知信息，并重新发送，而这里虽然只是将通知重新放回set里面去，但是这个函数有一个<a href="#org20bb883">大循环</a>，那么这条通知后续肯定会被再拿出来，然后走上面分析过的同样逻辑。也就是这次选主判定无效，需要重新选主。</p>
+
+<p>在判定选票（Notification）有效后，zkServer会使用选票（Notification）中的部分信息（leader，zxid，electionEpoch，peerEpoch）构建出一个vote对象。有点奇怪，英文单词vote才是选票的意思，那之前把Notification称作选票并不合适，它应该不止选主的作用。确实如此，因为Notification的状态不止包含Looking，还有Observing、Leading等（通过前面switch条件和case就可以分析出来）。所以我们后面把Notification换成英文直译————通知更合适。</p>
+
+<p>出现这种问题在看源码时很常见，毕竟我们一直都在大胆地猜测，刚开始猜测出错的概率肯定会很大，因此 <strong>如果有足够的证据，证明自己的猜测不合理，那就要果断推翻</strong> 。无需担忧，随着看源码经验增长，猜测的正确率会越来越高的。</p>
+
+<p>根据前面分析，如果n不等于null，那么就意味着存在一条通知使得zkServer的选举信息需要更新，那这后面一段代码，就是认为当前不存在需要更新选主状态时需要执行的流程。此时更新本机的状态，如果提案的leader等于自己的Id，就更新为leading，否则更新为learning，很明显，这里就完成选主任务。
+而termPredicate函数应该就是统计选票的函数，该函数在确定已经选出主节点的情况就会返回true。</p>
+
+<p>lookForLeader函数关于选主部分基本已经分析完： * 该函数通过发送并处理集群内zkServer相同选主周期的通知信息，调用选票统计函数进行选主分析，在选主成功后返回选票结果信息 * 。</p>
+
+<h2 id="5-dot-小结">5. 小结</h2>
+
+<p>这篇文章是 <strong>看源码</strong> 系列的第一篇，主要关注如何开始看源码这个主题，并会提到看源码中的一些常见方式和方法。因此真正涉及的源码会比较少。因此这一篇只会针对看源码的一些方式方法进行小结，而zookeepr源码及选主的东西将会结合下一篇一起总结。</p>
+
+<ul>
+<li>在阅读源码前一定要有一个 <strong>足够小的目标</strong> ，有的放矢才不会 <strong><a href="#org4ed5fa5">阅读迷失</a></strong> 。</li>
+
+<li><p><strong>代码项目是有机的整体，从哪里开始阅读并不那么重要,重要的是真正静下心来阅读</strong></p>
+
+<p>要想真正地读懂源码，关键的函数肯定会被研读很多遍的，所以也不用担心错过某些细节的东西。而如果你选了一个跟目标关系不大阅读起点其实也不用担心，良好的代码设计和现代IDE工具很快就能帮你找到真正要找的代码。</p></li>
+
+<li><p><strong>阅读函数前先分析函数的结构</strong></p>
+
+<p>由于我们一开始就有了阅读目标，带着任务去分析一个事物能让我们更好地抓住重点，把握关键。</p></li>
+
+<li><p><strong>大胆猜测，小心求证</strong></p>
+
+<p>虽然现代IDE能帮我们更快地找到函数的定义或者直接跳转到谷歌上搜索其含义，但是专注在同一抽象层级阅读源码，并专注一小块代码，能让我们更好更快地理解，也更不容易陷入 <strong><a href="#org4ed5fa5">阅读迷失</a></strong> 的困境。</p></li>
+</ul>
+
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Jack</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2021-07-25</span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/zookeeper/">zookeeper</a>
+          
+          <a href="/tags/source-code/">source code</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/votesrule/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Zookeeper选票更新规则源码</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        
+          <a class="next" href="/post/whyreadingsourcecode/">
+            <span class="next-text nav-default">看源码系列缘由</span>
+            <span class="prev-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+        
+        
+        if (window.location.hostname === 'localhost') return;
+
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'jackzga';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com/" class="dsq-brlink" target="_blank">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+  
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://www.jackz.ga/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2019 - 
+    2021
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Jack</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/even.min.js?v=2.7.0"></script>
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-148020965-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+</body>
+</html>

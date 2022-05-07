@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>看源码系列缘由 - Jack&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Jack" />
+  <meta name="description" content="在准备开始时，我在想什么 此时已是工作三年余，看过的代码着实不少，多半不知其中奥义，只在看到他人谈论之时，惊觉，竟是如此，心底不免有些羞愧；同" />
+
+  <meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.40.1" />
+
+
+<link rel="canonical" href="https://www.jackz.ga/post/whyreadingsourcecode/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/even.min.css?v=2.7.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+<meta property="og:title" content="看源码系列缘由" />
+<meta property="og:description" content="在准备开始时，我在想什么 此时已是工作三年余，看过的代码着实不少，多半不知其中奥义，只在看到他人谈论之时，惊觉，竟是如此，心底不免有些羞愧；同" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.jackz.ga/post/whyreadingsourcecode/" />
+
+
+
+<meta property="article:published_time" content="2019-07-10T00:00:00&#43;08:00"/>
+
+<meta property="article:modified_time" content="2019-08-28T22:30:50&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="看源码系列缘由">
+<meta itemprop="description" content="在准备开始时，我在想什么 此时已是工作三年余，看过的代码着实不少，多半不知其中奥义，只在看到他人谈论之时，惊觉，竟是如此，心底不免有些羞愧；同">
+
+
+<meta itemprop="datePublished" content="2019-07-10T00:00:00&#43;08:00" />
+<meta itemprop="dateModified" content="2019-07-10T00:00:00&#43;08:00" />
+<meta itemprop="wordCount" content="1046">
+
+
+
+<meta itemprop="keywords" content="thoughts," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="看源码系列缘由"/>
+<meta name="twitter:description" content="在准备开始时，我在想什么 此时已是工作三年余，看过的代码着实不少，多半不知其中奥义，只在看到他人谈论之时，惊觉，竟是如此，心底不免有些羞愧；同"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Jack</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Jack</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">看源码系列缘由</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-07-10 </span>
+        <div class="post-category">
+            
+              <a href="/categories/%E7%9C%8B%E6%BA%90%E7%A0%81/"> 看源码 </a>
+            
+          </div>
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#在准备开始时-我在想什么">在准备开始时，我在想什么</a></li>
+<li><a href="#在阅读源码时-我在想什么">在阅读源码时，我在想什么</a></li>
+<li><a href="#在写这系列时-我在想什么">在写这系列时，我在想什么</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+
+<figure>
+    
+        <img src="/ox-hugo/binary.jpg" />
+    
+    
+</figure>
+
+
+<h2 id="在准备开始时-我在想什么">在准备开始时，我在想什么</h2>
+
+<p>此时已是工作三年余，看过的代码着实不少，多半不知其中奥义，只在看到他人谈论之时，惊觉，竟是如此，心底不免有些羞愧；同时，工作的要求也水涨船高，最近也开始有点力不从心，自觉需要更多地阅读好的代码，以提升自己的能力，避免出现更大的危机。</p>
+
+<p>可工期繁忙，时间紧迫，然则，看源码之事，常有懈怠，其中内容更无法串联，常常是扭头就忘，又回到了先前的境地，因此才希望结合写博客的形式，既能敦促自己阅读，又可记录输出，不至于言帚忘笤。</p>
+
+<h2 id="在阅读源码时-我在想什么">在阅读源码时，我在想什么</h2>
+
+<p>常有人将学习分层：知其、知其然、知其所以然。通常我们在学习一个工具或者代码库是如此，看代码亦是如此，知道了每个代码块要实现的功能，看明白每个代码块如何实现该功能，最后再看明白代码块为何要这样实现。</p>
+
+<p>第一个层次，代码块总不会做太多的隐藏，并且会帮我们做总结——通过良好的抽象，让我们见名之意。到了代码块如何实现一个功能的层次，就不是如此直观了，一方面出于代码复用及扩展等原因，代码常会被拆分成不同的模块，散落在不同文件中，幸好前人已经总结《设计模式》这样的神书，让我们在学习途中有迹可循；不过对于另一方面，我们就没有这么幸运了，那些由于不良设计、安全需求或者正常业务所需，代码中常常夹杂着各种各样似是而非的噪音代码，其中一些更是将我们引入迷宫深处，难以知返。最后一个层次则属于更高层级的抽象，有些需要深入的领域知识，有些已经脱离了业务的范畴，为的是某种使用场景的专属规范，理清这些架构和设计信息，不仅需要大量的阅读还需要深厚的知识积累。</p>
+
+<p>在看代码时当然都想弄清楚这三个层级的信息，但却碍于能力问题，难以达到，因此想通过不断地总结与积累，提升自己的技巧与知识，让自己对代码的认识更上一层。</p>
+
+<h2 id="在写这系列时-我在想什么">在写这系列时，我在想什么</h2>
+
+<p>看源码如此重要却又如此难，所以才更需要有好的技巧与方法，更好更快地获取到想要获取的知识。但是当下的资料与论文都没有非常系统地阐述这个话题，大部分是将看源码后的成果流水式地铺展出来，这些更像是作者工作日志，无法借鉴；小部分是提纲挈领地将其积累的看源码经验表达出来，虽说精辟，却过于抽象，不好消化。因此看源码时常常不得其法，如盲人摸象，并且还时常犯一样的错误，走出乱流时才幡然醒悟，竟如先前状况一样，不免大拍脑门。</p>
+
+<p>因而这个系列重点记录了看源码时的一些思考与方法，提醒自己在遇到类似的代码迷宫时该如何下手，因而风格会更加口语化，内容也会稍显啰嗦。也只能这样，才能提醒自己不要重复犯错了。为了加深记忆，同时也作为看过代码的输出，这些思考和方法都是结合源码的具体实践，因此也会在恰当的时候，将看过的代码进行一次总结，也是后续通往更高层次抽象知识的积累。</p>
+
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Jack</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2019-08-28</span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/thoughts/">thoughts</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/lookforleader/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Zookeeper选主算法源码解读</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+        
+        
+        if (window.location.hostname === 'localhost') return;
+
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'jackzga';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com/" class="dsq-brlink" target="_blank">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+  
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://www.jackz.ga/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2019 - 
+    2021
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Jack</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/even.min.js?v=2.7.0"></script>
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-148020965-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+</body>
+</html>

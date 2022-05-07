@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Zookeeper选票更新规则源码 - Jack&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Jack" />
+  <meta name="description" content="本文主要通过串讲Zookeeper选票更新规则的源码，讲述通过阅读源码重构代码抽象的技巧和过程。 简介 上一篇主要介绍了Zookeeper选主的" />
+
+  <meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.40.1" />
+
+
+<link rel="canonical" href="https://www.jackz.ga/post/votesrule/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/even.min.css?v=2.7.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+<meta property="og:title" content="Zookeeper选票更新规则源码" />
+<meta property="og:description" content="本文主要通过串讲Zookeeper选票更新规则的源码，讲述通过阅读源码重构代码抽象的技巧和过程。 简介 上一篇主要介绍了Zookeeper选主的" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.jackz.ga/post/votesrule/" />
+
+
+
+<meta property="article:published_time" content="2019-08-21T00:00:00&#43;08:00"/>
+
+<meta property="article:modified_time" content="2021-04-05T23:10:58&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Zookeeper选票更新规则源码">
+<meta itemprop="description" content="本文主要通过串讲Zookeeper选票更新规则的源码，讲述通过阅读源码重构代码抽象的技巧和过程。 简介 上一篇主要介绍了Zookeeper选主的">
+
+
+<meta itemprop="datePublished" content="2019-08-21T00:00:00&#43;08:00" />
+<meta itemprop="dateModified" content="2019-08-21T00:00:00&#43;08:00" />
+<meta itemprop="wordCount" content="1156">
+
+
+
+<meta itemprop="keywords" content="zookeeper,source code," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Zookeeper选票更新规则源码"/>
+<meta name="twitter:description" content="本文主要通过串讲Zookeeper选票更新规则的源码，讲述通过阅读源码重构代码抽象的技巧和过程。 简介 上一篇主要介绍了Zookeeper选主的"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Jack</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Jack</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Zookeeper选票更新规则源码</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-08-21 </span>
+        <div class="post-category">
+            
+              <a href="/categories/%E7%9C%8B%E6%BA%90%E7%A0%81/"> 看源码 </a>
+            
+          </div>
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#简介">简介</a></li>
+<li><a href="#选票更新规则">选票更新规则</a></li>
+<li><a href="#小结">小结</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<p>本文主要通过串讲Zookeeper选票更新规则的源码，讲述通过阅读源码重构代码抽象的技巧和过程。</p>
+
+<h2 id="简介">简介</h2>
+
+<p>上一篇主要介绍了<a href="https://www.jackz.ga/post/lookforleader/">Zookeeper选主的算法框架</a>，但很多疑惑并没有解决，接下来，我们看下节点如何根据选票信息确认是否要更改选票。</p>
+
+<h2 id="选票更新规则">选票更新规则</h2>
+
+<p>在解读zookeeper选主源码时，我们做了个猜测<a href="https://www.jackz.ga/post/lookforleader/#org8a41141">totalOrderPredicate函数是用来判断是否需要更新选票</a>，现在我们需要详细了解其中规则。尝试验证这个猜测的正确性。</p>
+
+<pre><code class="language-java">protected boolean totalOrderPredicate(long newId, long newZxid, long newEpoch,
+                                      long curId, long curZxid, long curEpoch) {
+      LOG.debug(&quot;id: &quot; + newId + &quot;, proposed id: &quot; + curId + &quot;, zxid: 0x&quot; +
+              Long.toHexString(newZxid) + &quot;, proposed zxid: 0x&quot; + Long.toHexString(curZxid));
+      if(self.getQuorumVerifier().getWeight(newId) == 0){
+          return false;
+      }
+
+      return ((newEpoch &gt; curEpoch) ||
+              ((newEpoch == curEpoch) &amp;&amp;
+              ((newZxid &gt; curZxid) || ((newZxid == curZxid) &amp;&amp; (newId &gt; curId)))));
+  }
+</code></pre>
+
+<p>上面就是这个函数所有能被执行的代码，除去日志其实只有3个有效语句。而第一、二句显然是处理一种特殊情况，如果把两句去掉，剩下的函数就是一个纯函数了。</p>
+
+<blockquote>
+<p>在程序设计中，若一个函数符合以下要求，则它可能被认为是纯函数：</p>
+
+<ol>
+<li>此函数在相同的输入值时，需产生相同的输出。函数的输出和输入值以外的其他隐藏信息或状态无关，也和由I/O设备产生的外部输出无关。</li>
+<li>该函数不能有语义上可观察的函数副作用，诸如“触发事件”，使输出设备输出，或更改输出值以外物件的内容等。  &ndash;<a href="https://en.wikipedia.org/wiki/Pure%5Ffunction">维基百科</a></li>
+</ol>
+</blockquote>
+
+<p>之所以提到纯函数，是因为这类函数对于 <strong>重建代码抽象</strong> 有非常大的帮助。首先函数的代码不会有副作用，也不依赖除参数外的任何信息，那么我们只需要专注于当前的代码即可，不用担心因代码跳转导致的阅读迷失；更重要的是函数的返回值之与入参相关，如此，我们在阅读调用这个函数的代码时，可以很方便的直接知道对应的返回值，这些都是函数式编程又重新流行的原因。</p>
+
+<blockquote>
+<p>写代码就是将抽象的业务用具体的代码表达出来，同时程序员在实现对应功能的时候也会为了解耦，实现多层的抽象，而我们要读懂代码，首要工作就是重建这些抽象。</p>
+</blockquote>
+
+<p>如果我们去查看这个文件的修改记录就会发现这个函数的初始设计者就是将其写成纯函数，只是后面增加新的特性才破坏了这个特性，见下图。
+<img src="/home/jack/blog/jackzBlog.github.io/ox-hugo/totalOrderPredicate-diff.png" alt="" />
+不过由于这个函数比较简单，命名也很规范，要重构其抽象也很简单，如果收到新的LeaderId权重（weight）为0则返回false；否则依次对比周期（epoch），事务编号（zxid）和节点编号（curId），只有在前置条件相等时，才需要比较后一个值的大小。</p>
+
+<p>结合调用点的代码，这个函数返回true是则需要更新本机的选票，那么 <strong>zookeepr的选主规则可描述为：权重不为0的节点才可被选为主节点，其中周期大的当选，周期一致时事务编号大的当选，前两者都一致的情况，则有编号的节点当选</strong> 。自此我们就通过源码重建了zookeeper选主这个抽象业务的逻辑。</p>
+
+<h2 id="小结">小结</h2>
+
+<p>无论出于什么目的去阅读源码:</p>
+
+<ul>
+<li><strong>阅读源码首要工作就是重建开发者构建的层层抽象</strong></li>
+<li><strong>纯函数的优异特性使得读者更容易阅读，更易重建抽象</strong> 。</li>
+</ul>
+
+<hr />
+
+<p>如果对函数式编程编程感兴趣可以阅读这几个材料：<a href="https://en.wikipedia.org/wiki/Functional%5Fprogramming">函数式编程</a>、<a href="https://hackernoon.com/why-functional-programming-matters-c647f56a7691">Why functional programming matters</a>、<a href="http://weblog.raganwald.com/2007/03/why-why-functional-programming-matters.html">Why Why Functional Programming Matters Matters</a>。</p>
+
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Jack</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2021-04-05</span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/zookeeper/">zookeeper</a>
+          
+          <a href="/tags/source-code/">source code</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/votescount/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Zookeeper选票统计源码</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        
+          <a class="next" href="/post/lookforleader/">
+            <span class="next-text nav-default">Zookeeper选主算法源码解读</span>
+            <span class="prev-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+        
+        
+        if (window.location.hostname === 'localhost') return;
+
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'jackzga';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com/" class="dsq-brlink" target="_blank">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+  
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://www.jackz.ga/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2019 - 
+    2021
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Jack</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/even.min.js?v=2.7.0"></script>
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-148020965-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+</body>
+</html>

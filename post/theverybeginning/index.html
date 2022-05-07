@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>在阅读zookeeper源码前 - Jack&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Jack" />
+  <meta name="description" content="在阅读源码前配置IDE配置环境这些常规操作，大家肯定都是顺手拈来的，就像整个阅读源码系列一样，我们在这主要是要讨论什么时候该停，以免准备地太" />
+
+  <meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.40.1" />
+
+
+<link rel="canonical" href="https://www.jackz.ga/post/theverybeginning/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/even.min.css?v=2.7.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+<meta property="og:title" content="在阅读zookeeper源码前" />
+<meta property="og:description" content="在阅读源码前配置IDE配置环境这些常规操作，大家肯定都是顺手拈来的，就像整个阅读源码系列一样，我们在这主要是要讨论什么时候该停，以免准备地太" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.jackz.ga/post/theverybeginning/" />
+
+
+
+<meta property="article:published_time" content="2021-07-18T00:00:00&#43;08:00"/>
+
+<meta property="article:modified_time" content="2021-07-20T23:07:29&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="在阅读zookeeper源码前">
+<meta itemprop="description" content="在阅读源码前配置IDE配置环境这些常规操作，大家肯定都是顺手拈来的，就像整个阅读源码系列一样，我们在这主要是要讨论什么时候该停，以免准备地太">
+
+
+<meta itemprop="datePublished" content="2021-07-18T00:00:00&#43;08:00" />
+<meta itemprop="dateModified" content="2021-07-18T00:00:00&#43;08:00" />
+<meta itemprop="wordCount" content="651">
+
+
+
+<meta itemprop="keywords" content="zookeeper,source code," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="在阅读zookeeper源码前"/>
+<meta name="twitter:description" content="在阅读源码前配置IDE配置环境这些常规操作，大家肯定都是顺手拈来的，就像整个阅读源码系列一样，我们在这主要是要讨论什么时候该停，以免准备地太"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Jack</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Jack</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">在阅读zookeeper源码前</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2021-07-18 </span>
+        <div class="post-category">
+            
+              <a href="/categories/%E7%9C%8B%E6%BA%90%E7%A0%81/"> 看源码 </a>
+            
+          </div>
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#1-dot-开发者指导文档">1. 开发者指导文档</a></li>
+<li><a href="#2-dot-模块化运行">2. 模块化运行</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<p>在阅读源码前配置IDE配置环境这些常规操作，大家肯定都是顺手拈来的，就像整个阅读源码系列一样，我们在这主要是要讨论什么时候该停，以免准备地太过、走得太远，以至于事倍功半。</p>
+
+<h2 id="1-dot-开发者指导文档">1. 开发者指导文档</h2>
+
+<p>关于如何编译并运行zookeeper源码的实践帖子网上比比皆是，甚至有精确到某一个commit的编译运行方案，不再赘述。在此主要讨论的是如何更好地为阅读源码做好准备。</p>
+
+<p>首先很多人都会忽略开源仓库中写给参与人员的指导文件，在zookeeper里就是readme里面的<a href="https://github.com/apache/zookeeper/blob/c74658d398cdc1d207aa296cb6e20de00faec03e/README.md#contributing">Contributing</a>章节，这些文档是阅读源码的最佳入门指导，因为它们通常包含了编译、运行和调试的指导，这些正是我们熟悉源码最需要的操作；与此同时它们还可能包含代码规范、工作流解读甚至是项目工程架构说明，这是我们阅读源码非常有力的辅助资料；因此我们在阅读源码前一定要阅读一遍对应的开发文档（最好是在下载源码前），最好能把上面的操作步骤都实践一遍，如此我们就可以开始阅读源码了。</p>
+
+<h2 id="2-dot-模块化运行">2. 模块化运行</h2>
+
+<p>还有一点需要单独强调，编译、运行代码都不是非要全量代码都编译运行的，尤其是像Android和Linux这种大型项目就更是如此，当然它们都做到了很好的模块化，开发者只需要编译其中的一小个模块既可。而对于其他一些模块化做得没那么好的工程也可以尝试是否能够运行其中的单元测试，如果能运行单元测试也可立刻着手阅读对应的源码了，因为此时已经能够通过修改测试用例来验证我们的猜测。</p>
+
+<p>宗旨就是在阅读源码前一定要有能验证我们阅读思考是否正确的环境，因此最好的方法就是跟着开发指导来，毕竟写源码的人就是这么上手的。</p>
+
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Jack</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2021-07-20</span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/zookeeper/">zookeeper</a>
+          
+          <a href="/tags/source-code/">source code</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/lookforleadersummary/">
+            <span class="next-text nav-default">Zookeeper选主小结</span>
+            <span class="prev-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+        
+        
+        if (window.location.hostname === 'localhost') return;
+
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'jackzga';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com/" class="dsq-brlink" target="_blank">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+  
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://www.jackz.ga/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2019 - 
+    2021
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Jack</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/even.min.js?v=2.7.0"></script>
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-148020965-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+</body>
+</html>

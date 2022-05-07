@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>源码阅读简介 - Jack&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Jack" />
+  <meta name="description" content="学习最重要的两个点就是输入和输出，对于程序员而言最重要的输出当然是代码编写，而最重要的输入则是代码阅读。然而没有任何一门课程或任何一本书的教" />
+
+  <meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.40.1" />
+
+
+<link rel="canonical" href="https://www.jackz.ga/post/introduction/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/even.min.css?v=2.7.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+<meta property="og:title" content="源码阅读简介" />
+<meta property="og:description" content="学习最重要的两个点就是输入和输出，对于程序员而言最重要的输出当然是代码编写，而最重要的输入则是代码阅读。然而没有任何一门课程或任何一本书的教" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.jackz.ga/post/introduction/" />
+
+
+
+<meta property="article:published_time" content="2020-11-06T00:00:00&#43;08:00"/>
+
+<meta property="article:modified_time" content="2021-03-07T22:36:13&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="源码阅读简介">
+<meta itemprop="description" content="学习最重要的两个点就是输入和输出，对于程序员而言最重要的输出当然是代码编写，而最重要的输入则是代码阅读。然而没有任何一门课程或任何一本书的教">
+
+
+<meta itemprop="datePublished" content="2020-11-06T00:00:00&#43;08:00" />
+<meta itemprop="dateModified" content="2020-11-06T00:00:00&#43;08:00" />
+<meta itemprop="wordCount" content="708">
+
+
+
+<meta itemprop="keywords" content="thoughts," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="源码阅读简介"/>
+<meta name="twitter:description" content="学习最重要的两个点就是输入和输出，对于程序员而言最重要的输出当然是代码编写，而最重要的输入则是代码阅读。然而没有任何一门课程或任何一本书的教"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Jack</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Jack</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">源码阅读简介</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-11-06 </span>
+        <div class="post-category">
+            
+              <a href="/categories/%E7%9C%8B%E6%BA%90%E7%A0%81/"> 看源码 </a>
+            
+          </div>
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#源码阅读的目的">源码阅读的目的</a></li>
+<li><a href="#源码阅读的本质">源码阅读的本质</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<p>学习最重要的两个点就是输入和输出，对于程序员而言最重要的输出当然是代码编写，而最重要的输入则是代码阅读。然而没有任何一门课程或任何一本书的教导我们阅读源码，以至于我们总是在使用很笨拙的方法在阅读源码，同时我们阅读地最多的还是自己的代码，以至于编码水平无法有大的突破。</p>
+
+<h2 id="源码阅读的目的">源码阅读的目的</h2>
+
+<blockquote>
+<p>目标要明确，信念要坚定。 &ndash;林肯</p>
+</blockquote>
+
+<p>只有知道要去哪，才算真的启程，目标对于阅读源码犹为重要，这也是我们把这个主题放在首位地原因。通常我们阅读源码都是想要知道 <strong>某一个功能的大概写法</strong> ,而后，可能会想进一步 <strong>了解代码实现细节和数据流向</strong> ，因为这样能帮助我们更好地理解代码为什么要这样写，学习其中的算法逻辑，同时有助于我们 <strong>查找代码中的BUG</strong> ,毕竟问题定位和代码检视都是我们程序员必备的技能，最后我们会希望能通过阅读代码学习到该 <strong>软件架构和顶层设计</strong> 以参与软件的深入设计和开发甚至重新实现。而具体到阅读代码的时，也要有相应的小目标，比如彻底弄懂一个代码块的细节，弄清楚某函数具体作用，学习一个流程的前后细节等。
+阅读源码的目的通常都是如此层层递进，谨记这些逻辑有助于我们更高效地厘清思路，才不容易一头扎进代码的大网里，才知道什么时候是停下来的正确时机。</p>
+
+<h2 id="源码阅读的本质">源码阅读的本质</h2>
+
+<blockquote>
+<p>编写代码是一个将文档或者脑海中一个抽象的逻辑通过程序语言转换成具体细节的过程，而源码阅读则是从具体的代码细节中重建抽象的过程。</p>
+</blockquote>
+
+<p>代码编写无论是大是小，都是为了实现功能，也就是用具体代码将功能表达出来。但出于拓展、维护和代码复用等考虑，软件里各种功能会相互交织在一起，形成一张巨大的功能网，我们的任务则是在这些，同时这些网络并没有明确的路标，迷失在其中的码农自然不计其数。在大型软件里这些功能网络过于复杂，根本没有办法探清全貌，所以阅读源码时，主要是从代码网络中重建功能抽象，整理出软件的架构脉络，以备后面继续细读。</p>
+
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Jack</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2021-03-07</span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/thoughts/">thoughts</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/lookforleadersummary/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Zookeeper选主小结</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        
+          <a class="next" href="/post/votescount/">
+            <span class="next-text nav-default">Zookeeper选票统计源码</span>
+            <span class="prev-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+        
+        
+        if (window.location.hostname === 'localhost') return;
+
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'jackzga';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com/" class="dsq-brlink" target="_blank">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+  
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://www.jackz.ga/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2019 - 
+    2021
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Jack</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/even.min.js?v=2.7.0"></script>
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-148020965-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+</body>
+</html>
